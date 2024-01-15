@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setMatchedUser } from '../slices/mailSlice';
+import MatchedUserList from './MatchedUserList';
 
 const Main = () => {
     const [userInput, setUserInput] = useState("");
     const inputTagRef = useRef(null);
+    const absoluteDivRef = useRef(null);
     const dispatch = useDispatch();
 
     // Use useRef for the timeout variable
@@ -37,16 +39,36 @@ const Main = () => {
         }, 500);
     }
 
+    // Handle input focus
+    const handleFocus = () => {
+        absoluteDivRef.current.style.display = 'block';
+    }
+
+    // Handle input blur
+    const handleBlur = () => {
+        absoluteDivRef.current.style.display = 'none';
+    }
+
   return (
     <div className='w-[60%] min-h-[500px] h-auto bg-[#DADADA] shadow-md rounded-md py-5 px-3'>
-        <div onClick={clickHandler} className=' w-[100%] h-auto bg-[#EFEFEF]  flex flex-row gap-3 flex-wrap py-5 px-3 border-[#900C3F] border-b-4 rounded-md'>
-            <input 
-                onInput={inputHandler} 
-                onChange={changeHandler} 
-                ref={inputTagRef} 
-                type='text' 
-                value={userInput} 
-                className=' outline-none bg-[#EFEFEF] w-auto min-w-[22ch] transition-all duration-[10]' />
+        <div onClick={clickHandler} className=' w-[100%] h-auto bg-[#EFEFEF]  flex flex-row gap-3 flex-wrap py-5 px-3 border-[#900C3F] border-b-4 rounded-md relative'>
+            <p>abkcjajks</p>
+            <div className=' w-auto max-w-[100%] min-w-[400px] h-auto bg-[#EFEFEF]  flex flex-row gap-3 flex-wrap rounded-md relative'>
+                <input 
+                    onInput={inputHandler} 
+                    onChange={changeHandler} 
+                    ref={inputTagRef}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                    type='text' 
+                    value={userInput} 
+                    className=' outline-none bg-[#EFEFEF] w-auto min-w-[22ch] transition-all duration-[200]' />
+                
+                <div ref={absoluteDivRef} className='absolute w-[400px] h-auto bg-[#EFEFEF] left-0 top-[200%] py-1'>
+                    <MatchedUserList />
+                </div>
+            </div>
+
         </div>
     </div>
   )

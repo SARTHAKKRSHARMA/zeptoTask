@@ -5,7 +5,8 @@ import sample_data from "../data/sample_data.json"
 const initialState = {
     allUser : sample_data,
     addedUser : [],
-    matchedUser : sample_data.slice(0, Math.min(5, sample_data.length))
+    matchedUser : sample_data.slice(0, Math.min(5, sample_data.length)),
+    
 }
 
 export const mailSlice = createSlice({
