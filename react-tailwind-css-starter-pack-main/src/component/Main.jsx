@@ -116,7 +116,7 @@ const Main = () => {
                     className=' outline-none bg-[#EFEFEF] w-auto min-w-[8ch]  max-w-[100%] transition-all duration-[200]' />
                 
                 {
-                    isVisible && <div ref={absoluteDivRef}  className='absolute w-[400px] max-w-[100%] h-auto bg-[#EFEFEF] left-0 top-[200%] py-1 overflow-x-auto'>
+                    isVisible && <div ref={absoluteDivRef}  className='absolute min-w-[400px] w-auto max-w-[100%] h-auto bg-[#EFEFEF] left-0 top-[200%] py-1 overflow-x-auto'>
                         <MatchedUserList inputTagRef={inputTagRef} userInput={userInput} setUserInput={setUserInput} isVisible={isVisible}/>
                     </div>
                 }
