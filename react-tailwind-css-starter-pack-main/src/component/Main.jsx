@@ -1,9 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { setMatchedUser } from '../slices/mailSlice';
 import MatchedUserList from './MatchedUserList';
+import { MdOutlineCancel } from "react-icons/md";
+
 
 const Main = () => {
+    const {addedUser} = useSelector(state => state.mailList);
     const [userInput, setUserInput] = useState("");
     const inputTagRef = useRef(null);
     const absoluteDivRef = useRef(null);
@@ -26,6 +29,9 @@ const Main = () => {
     // Handle click on the container
     const clickHandler = function () {
         inputTagRef.current.focus();
+        setTimeout(() => {
+            absoluteDivRef.current.style.display = 'block';
+        }, 200);
     }
 
     // Handle text input changes
@@ -46,13 +52,28 @@ const Main = () => {
 
     // Handle input blur
     const handleBlur = () => {
-        absoluteDivRef.current.style.display = 'none';
+        setTimeout(() => {
+            absoluteDivRef.current.style.display = 'none';
+        }, 200);
     }
 
   return (
     <div className='w-[60%] min-h-[500px] h-auto bg-[#DADADA] shadow-md rounded-md py-5 px-3'>
         <div onClick={clickHandler} className=' w-[100%] h-auto bg-[#EFEFEF]  flex flex-row gap-3 flex-wrap py-5 px-3 border-[#900C3F] border-b-4 rounded-md relative'>
-            <p>abkcjajks</p>
+            <>
+                {
+                    addedUser.map((user) => (
+                        <div key={user.id} onClick={(e) => console.log(e.target)} className=' rounded-full flex flex-row justify-between items-center bg-[#DADADA] pr-2'>
+                            <div className=' w-[20%] aspect-square rounded-full flex flex-row items-center justify-center overflow-hidden'>
+                                <img src={`https://ui-avatars.com/api/?name=${user.name}&background=random`} alt='User Thumbnail' />
+                            </div>
+                            <p className=' text-[12px] font-bold'>{user.name}</p>
+                            <MdOutlineCancel />
+                        </div>
+                    ))
+                }
+            </>
+
             <div className=' w-auto max-w-[100%] min-w-[400px] h-auto bg-[#EFEFEF]  flex flex-row gap-3 flex-wrap rounded-md relative'>
                 <input 
                     onInput={inputHandler} 
@@ -64,8 +85,8 @@ const Main = () => {
                     value={userInput} 
                     className=' outline-none bg-[#EFEFEF] w-auto min-w-[22ch] transition-all duration-[200]' />
                 
-                <div ref={absoluteDivRef} className='absolute w-[400px] h-auto bg-[#EFEFEF] left-0 top-[200%] py-1'>
-                    <MatchedUserList />
+                <div ref={absoluteDivRef}  className='absolute w-[400px] h-auto bg-[#EFEFEF] left-0 top-[200%] py-1'>
+                    <MatchedUserList inputTagRef={inputTagRef} setUserInput={setUserInput} />
                 </div>
             </div>
 
