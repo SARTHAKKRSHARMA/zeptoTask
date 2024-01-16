@@ -113,10 +113,10 @@ const Main = () => {
                     onBlur={handleBlur}
                     type='text' 
                     value={userInput} 
-                    className=' outline-none bg-[#EFEFEF] w-auto min-w-[22ch] transition-all duration-[200]' />
+                    className=' outline-none bg-[#EFEFEF] w-auto min-w-[22ch] max-w-[100%] transition-all duration-[200]' />
                 
                 {
-                    isVisible && <div ref={absoluteDivRef}  className='absolute w-[400px] h-auto bg-[#EFEFEF] left-0 top-[200%] py-1'>
+                    isVisible && <div ref={absoluteDivRef}  className='absolute w-[400px] max-w-[100%] h-auto bg-[#EFEFEF] left-0 top-[200%] py-1'>
                         <MatchedUserList inputTagRef={inputTagRef} userInput={userInput} setUserInput={setUserInput} isVisible={isVisible}/>
                     </div>
                 }
