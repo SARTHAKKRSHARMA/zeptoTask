@@ -6,7 +6,7 @@ const initialState = {
     allUser : sample_data,
     addedUser : [],
     matchedUser : sample_data.slice(0, Math.min(5, sample_data.length)),
-    
+    highlightLastOne : false    
 }
 
 // Create the mailList slice using createSlice from Redux Toolkit
@@ -41,6 +41,8 @@ export const mailSlice = createSlice({
             }
 
             state.matchedUser = state.allUser.slice(0, Math.min(5, state.allUser.length));
+            state.highlightLastOne = false;
+
         },
 
         removeUser : (state, action) => {
@@ -61,10 +63,16 @@ export const mailSlice = createSlice({
             }
 
             state.matchedUser = state.allUser.slice(0, Math.min(5, state.allUser.length));
+            state.highlightLastOne = false;
+        },
+
+        setHighlightLastOne : (state, action) => {
+            state.highlightLastOne = action.payload;
         }
+
     }
 })
 
 
-export const {setMatchedUser, addUser, removeUser} = mailSlice.actions;
+export const {setMatchedUser, addUser, removeUser, setHighlightLastOne} = mailSlice.actions;
 export default mailSlice.reducer
