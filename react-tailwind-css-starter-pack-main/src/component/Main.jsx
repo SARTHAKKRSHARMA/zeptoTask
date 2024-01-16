@@ -103,7 +103,7 @@ const Main = () => {
                 }
             </>
 
-            <div className=' w-auto max-w-[100%] min-w-[100%] h-auto bg-[#EFEFEF]  flex flex-row gap-3 flex-wrap rounded-md relative'>
+            <div className=' max-w-[100%] h-auto bg-[#EFEFEF]  flex flex-row gap-3 flex-wrap rounded-md relative'>
                 <input
                     placeholder='Add User' 
                     onInput={inputHandler} 
