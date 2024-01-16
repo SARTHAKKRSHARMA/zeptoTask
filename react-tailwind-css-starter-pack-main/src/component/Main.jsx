@@ -10,15 +10,13 @@ const Main = () => {
     const [userInput, setUserInput] = useState("");
     const inputTagRef = useRef(null);
     const absoluteDivRef = useRef(null);
+    const [isVisible, setIsVisible] = useState(false);
     const dispatch = useDispatch();
 
     // Use useRef for the timeout variable
     const timeoutRef = useRef(null);
 
-    // Focus on input element when component mounts
-    useEffect(() => {
-        inputTagRef.current.focus();
-    }, [])
+
 
     // Handle input changes
     const inputHandler = function () {
@@ -30,7 +28,7 @@ const Main = () => {
     const clickHandler = function () {
         inputTagRef.current.focus();
         setTimeout(() => {
-            absoluteDivRef.current.style.display = 'block';
+            setIsVisible(true)
         }, 200);
     }
 
@@ -47,13 +45,13 @@ const Main = () => {
 
     // Handle input focus
     const handleFocus = () => {
-        absoluteDivRef.current.style.display = 'block';
+        setIsVisible(true);
     }
 
     // Handle input blur
     const handleBlur = () => {
         setTimeout(() => {
-            absoluteDivRef.current.style.display = 'none';
+            setIsVisible(false);
         }, 200);
     }
 
@@ -62,9 +60,9 @@ const Main = () => {
         <div onClick={clickHandler} className=' w-[100%] h-auto bg-[#EFEFEF]  flex flex-row gap-3 flex-wrap py-5 px-3 border-[#900C3F] border-b-4 rounded-md relative'>
             <>
                 {
-                    addedUser.map((user) => (
-                        <div key={user.id} onClick={(e) => console.log(e.target)} className=' rounded-full flex flex-row justify-between items-center bg-[#DADADA] pr-2'>
-                            <div className=' w-[20%] aspect-square rounded-full flex flex-row items-center justify-center overflow-hidden'>
+                    addedUser.map((user, index) => (
+                        <div key={user.id} onClick={(e) => console.log(e.target)} className=' rounded-full min-w-[150px] w-auto flex flex-row gap-3 justify-between items-center bg-[#DADADA] pr-2'>
+                            <div className=' w-[30px] aspect-square rounded-full flex flex-row items-center justify-center overflow-hidden'>
                                 <img src={`https://ui-avatars.com/api/?name=${user.name}&background=random`} alt='User Thumbnail' />
                             </div>
                             <p className=' text-[12px] font-bold'>{user.name}</p>
@@ -85,9 +83,11 @@ const Main = () => {
                     value={userInput} 
                     className=' outline-none bg-[#EFEFEF] w-auto min-w-[22ch] transition-all duration-[200]' />
                 
-                <div ref={absoluteDivRef}  className='absolute w-[400px] h-auto bg-[#EFEFEF] left-0 top-[200%] py-1'>
-                    <MatchedUserList inputTagRef={inputTagRef} setUserInput={setUserInput} />
-                </div>
+                {
+                    isVisible && <div ref={absoluteDivRef}  className='absolute w-[400px] h-auto bg-[#EFEFEF] left-0 top-[200%] py-1'>
+                        <MatchedUserList inputTagRef={inputTagRef} setUserInput={setUserInput} isVisible={isVisible}/>
+                    </div>
+                }
             </div>
 
         </div>
