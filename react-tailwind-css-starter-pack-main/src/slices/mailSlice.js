@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import sample_data from "../data/sample_data.json"
 
-
+// Initial state for the mailList slice
 const initialState = {
     allUser : sample_data,
     addedUser : [],
@@ -9,10 +9,12 @@ const initialState = {
     
 }
 
+// Create the mailList slice using createSlice from Redux Toolkit
 export const mailSlice = createSlice({
     name : "mailList",
     initialState : initialState,
     reducers: {
+         // Action to filter and set matched users based on the input payload
         setMatchedUser : (state, action) => {
             const filteredResult = state.allUser.reduce((accumulator, user) => {
                 if (
@@ -24,7 +26,8 @@ export const mailSlice = createSlice({
                 }
                 return accumulator;
             }, []);
-
+            
+            // Update the matchedUser in the state
             state.matchedUser = filteredResult;
         },
 
@@ -61,6 +64,7 @@ export const mailSlice = createSlice({
         }
     }
 })
+
 
 export const {setMatchedUser, addUser, removeUser} = mailSlice.actions;
 export default mailSlice.reducer

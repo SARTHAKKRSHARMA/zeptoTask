@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { setMatchedUser } from '../slices/mailSlice';
+import { removeUser, setMatchedUser } from '../slices/mailSlice';
 import MatchedUserList from './MatchedUserList';
 import { MdOutlineCancel } from "react-icons/md";
 
@@ -55,25 +55,31 @@ const Main = () => {
         }, 200);
     }
 
+    const removeUserFromList = (e, id) => {
+        e.stopPropagation();
+        dispatch(removeUser(id));
+    }
+
   return (
     <div className='w-[60%] min-h-[500px] h-auto bg-[#DADADA] shadow-md rounded-md py-5 px-3'>
         <div onClick={clickHandler} className=' w-[100%] h-auto bg-[#EFEFEF]  flex flex-row gap-3 flex-wrap py-5 px-3 border-[#900C3F] border-b-4 rounded-md relative'>
             <>
                 {
                     addedUser.map((user, index) => (
-                        <div key={user.id} onClick={(e) => console.log(e.target)} className=' rounded-full min-w-[150px] w-auto flex flex-row gap-3 justify-between items-center bg-[#DADADA] pr-2'>
+                        <div key={user.id} className=' rounded-full min-w-[150px] w-auto flex flex-row gap-3 justify-between items-center bg-[#DADADA] pr-2'>
                             <div className=' w-[30px] aspect-square rounded-full flex flex-row items-center justify-center overflow-hidden'>
                                 <img src={`https://ui-avatars.com/api/?name=${user.name}&background=random`} alt='User Thumbnail' />
                             </div>
                             <p className=' text-[12px] font-bold'>{user.name}</p>
-                            <MdOutlineCancel />
+                            <button onClick={(e) => removeUserFromList(e, user.id)}><MdOutlineCancel /></button>
                         </div>
                     ))
                 }
             </>
 
             <div className=' w-auto max-w-[100%] min-w-[400px] h-auto bg-[#EFEFEF]  flex flex-row gap-3 flex-wrap rounded-md relative'>
-                <input 
+                <input
+                    placeholder='Add User' 
                     onInput={inputHandler} 
                     onChange={changeHandler} 
                     ref={inputTagRef}
@@ -85,7 +91,7 @@ const Main = () => {
                 
                 {
                     isVisible && <div ref={absoluteDivRef}  className='absolute w-[400px] h-auto bg-[#EFEFEF] left-0 top-[200%] py-1'>
-                        <MatchedUserList inputTagRef={inputTagRef} setUserInput={setUserInput} isVisible={isVisible}/>
+                        <MatchedUserList inputTagRef={inputTagRef} userInput={userInput} setUserInput={setUserInput} isVisible={isVisible}/>
                     </div>
                 }
             </div>
